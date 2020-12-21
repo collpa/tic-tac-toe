@@ -10,9 +10,9 @@ class App extends React.Component {
       <div>
         <Header />
         <div>
-          <Player />
+          <Player isFirst={true} />
           <Board />
-          <Player />
+          <Player isFirst={false} />
         </div>
       </div>
     );
