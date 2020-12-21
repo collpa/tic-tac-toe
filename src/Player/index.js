@@ -3,7 +3,14 @@ import "./styles.scss";
 
 class Player extends React.Component {
   render() {
-    return <p>Hi</p>;
+    const { isFirst } = this.props;
+    return (
+      <div>
+        <p className={isFirst ? "first" : "second"}>
+          {isFirst ? "Player1" : "Player2"}
+        </p>
+      </div>
+    );
   }
 }
 
