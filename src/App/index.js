@@ -9,10 +9,10 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <div>
-          <Player isFirst={true} />
+        <div className="container">
+          <Player isFirstPlayer={true} playerName={"Player 1"} />
           <Board />
-          <Player isFirst={false} />
+          <Player isFirstPlayer={false} playerName={"Player 2"} />
         </div>
       </div>
     );

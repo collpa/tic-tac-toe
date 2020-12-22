@@ -3,12 +3,11 @@ import "./styles.scss";
 
 class Player extends React.Component {
   render() {
-    const { isFirst } = this.props;
+    const { isFirstPlayer, isYourTurn, playerName } = this.props;
     return (
       <div>
-        <p className={isFirst ? "first" : "second"}>
-          {isFirst ? "Player1" : "Player2"}
-        </p>
+        <p className={isFirstPlayer ? "first" : "second"}>{playerName}</p>
+        {isYourTurn && <p>YOUR TURN MATE!</p>}
       </div>
     );
   }
