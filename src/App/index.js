@@ -1,8 +1,8 @@
 import React from "react";
-import "./styles.scss";
 import Header from "../Header";
 import Player from "../Player";
 import Board from "../Board";
+import "./styles.scss";
 
 class App extends React.Component {
   render() {
@@ -10,9 +10,17 @@ class App extends React.Component {
       <div>
         <Header />
         <div className="container">
-          <Player isFirstPlayer={true} playerName={"Player 1"} />
+          <Player
+            isFirstPlayer={true}
+            playerName={"Player 1"}
+            isYourTurn={true}
+          />
           <Board />
-          <Player isFirstPlayer={false} playerName={"Player 2"} />
+          <Player
+            isFirstPlayer={false}
+            playerName={"Player 2"}
+            isYourTurn={true}
+          />
         </div>
       </div>
     );
