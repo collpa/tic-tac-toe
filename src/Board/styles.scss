@@ -1,0 +1,15 @@
+.grid-item {
+  width: 9vw;
+  height: 9vw;
+}
+
+.grid-board {
+  background-image: url("../assets/grid.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  margin-top: 10vh;
+  max-width: 27vw;
+  display: flex;
+  flex-wrap: wrap;
+}

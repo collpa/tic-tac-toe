@@ -1,8 +1,21 @@
 import React from "react";
+import "./styles.scss";
 
 class Board extends React.Component {
   render() {
-    return <p>Board</p>;
+    return (
+      <div className="grid-board">
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+        <div className="grid-item"></div>
+      </div>
+    );
   }
 }
 
