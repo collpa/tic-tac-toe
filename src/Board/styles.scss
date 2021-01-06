@@ -1,8 +1,3 @@
-.grid-item {
-  width: 9vw;
-  height: 9vw;
-}
-
 .grid-board {
   background-image: url("../assets/grid.png");
   background-repeat: no-repeat;
@@ -12,4 +7,32 @@
   max-width: 27vw;
   display: flex;
   flex-wrap: wrap;
+}
+
+.grid-item {
+  width: 9vw;
+  height: 9vw;
+}
+
+@mixin grid-item-image($urlImage) {
+  background-image: url($urlImage);
+  background-repeat: no-repeat;
+  background-size: 68%;
+  background-position: center;
+}
+
+.grid-cross-one {
+  @include grid-item-image("../assets/player1cross.png");
+}
+
+.grid-cross-two {
+  @include grid-item-image("../assets/player2cross.png");
+}
+
+.grid-nought-one {
+  @include grid-item-image("../assets/player1noughts.png");
+}
+
+.grid-nought-two {
+  @include grid-item-image("../assets/player2noughts.png");
 }
