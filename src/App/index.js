@@ -19,7 +19,7 @@ class App extends React.Component {
   onClickBoardItem = (positionOfItem) => {
     let newBoardCells = this.state.boardCells;
 
-    if (newBoardCells[positionOfItem] === 0) {
+    if (newBoardCells[positionOfItem] === 0 && !this.state.endGame) {
       let currentTurn = this.state.turn;
       let currentPlayer = currentTurn % 2 === 0 ? 1 : 2;
 
@@ -47,6 +47,7 @@ class App extends React.Component {
         this.setState({
           haveWinner: true,
           winner: currentPlayer,
+          endGame: true,
         });
       } else if (isEndGame) {
         this.setState({
@@ -137,6 +138,28 @@ class App extends React.Component {
     }
   }
 
+  /**
+   * It could be useful put the following snippet right after the constructor
+   * so, when you open the file, it will be one of the first info about the code
+   */
+  onClickAnyKeyboardKeys = () => {
+    if (this.state.endGame) {
+      this.setState({
+        boardCells: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        turn: 0,
+        haveWinner: false,
+        endGame: false,
+        winner: 0,
+      });
+    }
+  };
+  componentDidMount() {
+    document.addEventListener("keydown", this.onClickAnyKeyboardKeys);
+  }
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.onClickAnyKeyboardKeys);
+  }
+
   render() {
     return (
       <div>
@@ -156,6 +179,7 @@ class App extends React.Component {
             isFirstPlayer={true}
             playerName={"Player 1"}
             isYourTurn={this.state.turn % 2 === 0}
+            endGame={this.state.endGame}
           />
           <Board
             boardCells={this.state.boardCells}
@@ -167,6 +191,7 @@ class App extends React.Component {
             isFirstPlayer={false}
             playerName={"Player 2"}
             isYourTurn={this.state.turn % 2 !== 0}
+            endGame={this.state.endGame}
           />
         </div>
       </div>
