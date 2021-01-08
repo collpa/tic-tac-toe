@@ -12,6 +12,7 @@ class App extends React.Component {
       turn: 0,
       haveWinner: false,
       endGame: false,
+      winner: 0,
     };
   }
 
@@ -20,6 +21,7 @@ class App extends React.Component {
 
     if (newBoardCells[positionOfItem] === 0) {
       let currentTurn = this.state.turn;
+      let currentPlayer = currentTurn % 2 === 0 ? 1 : 2;
 
       if (currentTurn % 2 === 0) {
         newBoardCells[positionOfItem] = 1;
@@ -44,6 +46,7 @@ class App extends React.Component {
       if (isThereAWinner) {
         this.setState({
           haveWinner: true,
+          winner: currentPlayer,
         });
       } else if (isEndGame) {
         this.setState({
@@ -137,7 +140,17 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header />
+        <Header
+          endGame={this.state.endGame}
+          haveWinner={this.state.haveWinner}
+          playerName={
+            this.state.winner === 1
+              ? "Player 1"
+              : this.state.winner === 2
+              ? "Player 2"
+              : null
+          }
+        />
         <div className="container">
           <Player
             isFirstPlayer={true}
