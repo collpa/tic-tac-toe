@@ -136,7 +136,7 @@ class App extends React.Component {
           <Player
             isFirstPlayer={true}
             playerName={"Player 1"}
-            isYourTurn={true}
+            isYourTurn={this.state.turn % 2 === 0}
           />
           <Board
             boardCells={this.state.boardCells}
@@ -147,7 +147,7 @@ class App extends React.Component {
           <Player
             isFirstPlayer={false}
             playerName={"Player 2"}
-            isYourTurn={false}
+            isYourTurn={this.state.turn % 2 !== 0}
           />
         </div>
       </div>
