@@ -24,14 +24,10 @@ class Board extends React.Component {
         newBoardCells[positionOfItem] = 2;
       }
 
-      this.setState(
-        {
+      this.setState({
           boardCells: newBoardCells,
           turn: currentTurn + 1,
-        },
-        //the following "callback" is called when the setState has finished changing the state
-        () => this.checkWinner(newBoardCells)
-      );
+      });
     }
   }
 
