@@ -3,12 +3,13 @@ import "./styles.scss";
 
 class Player extends React.Component {
   render() {
-    const { isFirstPlayer, isYourTurn, playerName } = this.props;
+    const { isFirstPlayer, isYourTurn, playerName, endGame } = this.props;
+    console.log(endGame);
     return (
       <div className={`${isFirstPlayer ? "first" : "second"} container-player`}>
         <p>{playerName}</p>
 
-        {isYourTurn && (
+        {isYourTurn && !endGame && (
           <p
             className={
               isFirstPlayer ? "text-turn-player1" : "text-turn-player2"
