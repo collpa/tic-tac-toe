@@ -1,8 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap");
 
+.header-container {
+  height: 150px;
+}
+
 h1 {
   font-family: "Bungee Outline", cursive;
   color: #c6d8d3;
   font-size: 80px;
   text-align: center;
+  margin-bottom: 0;
+}
+
+h3 {
+  color: #c6d8d3;
+  font-family: "Fredoka One", cursive;
+
+  font-size: 17px;
+  text-align: center;
+  margin-top: 0;
 }
