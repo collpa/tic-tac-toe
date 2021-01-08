@@ -25,9 +25,10 @@ class Board extends React.Component {
       }
 
       this.setState({
-          boardCells: newBoardCells,
-          turn: currentTurn + 1,
+        boardCells: newBoardCells,
+        turn: currentTurn + 1,
       });
+
       let isThereAWinner = this.checkWinner(newBoardCells);
       let isEndGame = this.checkEndGame(newBoardCells);
 
@@ -107,6 +108,7 @@ class Board extends React.Component {
     ) {
       return true;
     }
+
     return false;
   }
 
@@ -125,23 +127,31 @@ class Board extends React.Component {
 
   render() {
     return (
-      <div className="grid-board">
-        {this.state.boardCells.map((cell, index) => {
-          return (
-            <div
-              key={index}
-              className={`grid-item  ${
-                cell === 1
-                  ? "grid-cross-one"
-                  : cell === 2
-                  ? "grid-nought-two"
-                  : ""
-              }`}
-              onClick={() => this.onClickBoardItem(index)}
-            ></div>
-          );
-        })}
-      </div>
+      /**
+       * <></> or <React.Fragment></React.Fragment> group a list of children
+       * without adding extra nodes to the DOM
+       */
+      <>
+        {this.state.haveWinner && <h1>Winner</h1>}
+        {this.state.endGame && <h1>Draw</h1>}
+        <div className="grid-board">
+          {this.state.boardCells.map((cell, index) => {
+            return (
+              <div
+                key={index}
+                className={`grid-item  ${
+                  cell === 1
+                    ? "grid-cross-one"
+                    : cell === 2
+                    ? "grid-nought-two"
+                    : ""
+                }`}
+                onClick={() => this.onClickBoardItem(index)}
+              ></div>
+            );
+          })}
+        </div>
+      </>
     );
   }
 }
