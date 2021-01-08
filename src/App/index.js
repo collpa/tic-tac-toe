@@ -27,6 +27,12 @@ class App extends React.Component {
         newBoardCells[positionOfItem] = 2;
       }
 
+      /**
+       * FUN FACT
+       * the 2nd parameter of a setState is a "callback"
+       * allows a function to call another function
+       * when the setState has finished changing the state
+       */
       this.setState({
         boardCells: newBoardCells,
         turn: currentTurn + 1,
