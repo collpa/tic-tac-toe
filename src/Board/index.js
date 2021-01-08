@@ -28,6 +28,18 @@ class Board extends React.Component {
           boardCells: newBoardCells,
           turn: currentTurn + 1,
       });
+      let isThereAWinner = this.checkWinner(newBoardCells);
+      let isEndGame = this.checkEndGame(newBoardCells);
+
+      if (isThereAWinner) {
+        this.setState({
+          haveWinner: true,
+        });
+      } else if (isEndGame) {
+        this.setState({
+          endGame: true,
+        });
+      }
     }
   }
 
