@@ -7,6 +7,8 @@ class Board extends React.Component {
     this.state = {
       boardCells: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       turn: 0,
+      haveWinner: false,
+      endGame: false,
     };
   }
 
