@@ -107,6 +107,20 @@ class Board extends React.Component {
     ) {
       return true;
     }
+    return false;
+  }
+
+  checkEndGame(boardCells) {
+    /**
+     * "some" check that at least one value is equal 0
+     * so if that's true the game must go on
+     *  otherwise the game is finished
+     */
+    if (boardCells.some((cell) => cell === 0)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   render() {
