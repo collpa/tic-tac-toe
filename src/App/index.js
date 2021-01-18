@@ -1,26 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../Header";
 import Player from "../Player";
 import Board from "../Board";
 import "./styles.scss";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      boardCells: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      turn: 0,
-      haveWinner: false,
-      endGame: false,
-      winner: 0,
-    };
-  }
+function AppHook() {
+  const [boardCells, setBoardCells] = React.useState([
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+  ]);
+  const [turn, setTurn] = React.useState(10);
+  const [haveWinner, setHaveWinner] = React.useState(false);
+  const [winner, setWinner] = React.useState(0);
+  const [endGame, setEndGame] = React.useState(false);
+  const endGameRef = React.useRef();
 
-  onClickBoardItem = (positionOfItem) => {
-    let newBoardCells = this.state.boardCells;
+  const onClickBoardItem = (positionOfItem) => {
+    let newBoardCells = boardCells;
 
-    if (newBoardCells[positionOfItem] === 0 && !this.state.endGame) {
-      let currentTurn = this.state.turn;
+    if (newBoardCells[positionOfItem] === 0 && !endGame) {
+      let currentTurn = turn;
       let currentPlayer = currentTurn % 2 === 0 ? 1 : 2;
 
       if (currentTurn % 2 === 0) {
@@ -35,29 +41,37 @@ class App extends React.Component {
        * allows a function to call another function
        * when the setState has finished changing the state
        */
-      this.setState({
-        boardCells: newBoardCells,
-        turn: currentTurn + 1,
-      });
+      setBoardCells(newBoardCells);
+      setTurn(currentTurn + 1);
 
-      let isThereAWinner = this.checkWinner(newBoardCells);
-      let isEndGame = this.checkEndGame(newBoardCells);
+      let isThereAWinner = checkWinner(newBoardCells);
+      let isEndGame = checkEndGame(newBoardCells);
 
       if (isThereAWinner) {
-        this.setState({
-          haveWinner: true,
-          winner: currentPlayer,
-          endGame: true,
-        });
+        setHaveWinner(true);
+        setWinner(currentPlayer);
+        console.log("entrato");
+        setEndGame(true);
       } else if (isEndGame) {
-        this.setState({
-          endGame: true,
-        });
+        setEndGame(true);
       }
     }
   };
 
-  checkWinner(boardCells) {
+  const checkEndGame = (boardCells) => {
+    /**
+     * "some" check that at least one value is equal 0
+     * so if that's true the game must go on
+     *  otherwise the game is finished
+     */
+    if (boardCells.some((cell) => cell === 0)) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const checkWinner = (boardCells) => {
     if (
       boardCells[0] !== 0 &&
       boardCells[0] === boardCells[1] &&
@@ -123,80 +137,66 @@ class App extends React.Component {
     }
 
     return false;
-  }
-
-  checkEndGame(boardCells) {
-    /**
-     * "some" check that at least one value is equal 0
-     * so if that's true the game must go on
-     *  otherwise the game is finished
-     */
-    if (boardCells.some((cell) => cell === 0)) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  };
 
   /**
-   * It could be useful put the following snippet right after the constructor
-   * so, when you open the file, it will be one of the first info about the code
+   * It could be useful to put the following snippet right after the constructor,
+   * so when you open the file, it will be one of the first info about the code
    */
-  onClickAnyKeyboardKeys = () => {
-    if (this.state.endGame) {
-      this.setState({
-        boardCells: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        turn: 0,
-        haveWinner: false,
-        endGame: false,
-        winner: 0,
-      });
+  const onClickAnyKeyboardKeys = () => {
+    if (endGameRef.current) {
+      setBoardCells([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      setTurn(0);
+      setHaveWinner(false);
+      setEndGame(false);
+      setWinner(0);
     }
   };
-  componentDidMount() {
-    document.addEventListener("keydown", this.onClickAnyKeyboardKeys);
-  }
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.onClickAnyKeyboardKeys);
-  }
 
-  render() {
-    return (
-      <div>
-        <Header
-          endGame={this.state.endGame}
-          haveWinner={this.state.haveWinner}
-          playerName={
-            this.state.winner === 1
-              ? "Player 1"
-              : this.state.winner === 2
-              ? "Player 2"
-              : null
-          }
+  useEffect(() => {
+    endGameRef.current = endGame;
+  }, [endGame]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", onClickAnyKeyboardKeys);
+    return () => {
+      window.removeEventListener("keydown", onClickAnyKeyboardKeys);
+    };
+    /**in the following line it's confirmed that external elements (document) have been used within the function*/
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div>
+      <Header
+        endGame={endGame}
+        haveWinner={haveWinner}
+        playerName={
+          winner === 1 ? "Player 1" : winner === 2 ? "Player 2" : null
+        }
+      />
+      <div className="container">
+        <Player
+          isFirstPlayer={true}
+          playerName={"Player 1"}
+          isYourTurn={turn % 2 === 0}
+          endGame={endGame}
         />
-        <div className="container">
-          <Player
-            isFirstPlayer={true}
-            playerName={"Player 1"}
-            isYourTurn={this.state.turn % 2 === 0}
-            endGame={this.state.endGame}
-          />
-          <Board
-            boardCells={this.state.boardCells}
-            endGame={this.state.endGame}
-            haveWinner={this.state.haveWinner}
-            onClickBoardItem={this.onClickBoardItem}
-          />
-          <Player
-            isFirstPlayer={false}
-            playerName={"Player 2"}
-            isYourTurn={this.state.turn % 2 !== 0}
-            endGame={this.state.endGame}
-          />
-        </div>
+        <Board
+          boardCells={boardCells}
+          endGame={endGame}
+          haveWinner={haveWinner}
+          onClickBoardItem={onClickBoardItem}
+        />
+        <Player
+          isFirstPlayer={false}
+          playerName={"Player 2"}
+          isYourTurn={turn % 2 !== 0}
+          endGame={endGame}
+        />
       </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default App;
+export default AppHook;
