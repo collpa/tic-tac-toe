@@ -4,7 +4,6 @@ import "./styles.scss";
 class Player extends React.Component {
   render() {
     const { isFirstPlayer, isYourTurn, playerName, endGame } = this.props;
-    console.log(endGame);
     return (
       <div className={`${isFirstPlayer ? "first" : "second"} container-player`}>
         <p>{playerName}</p>
