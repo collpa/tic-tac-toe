@@ -3,24 +3,17 @@ import Header from "../Header";
 import Player from "../Player";
 import Board from "../Board";
 import "./styles.scss";
+import { connect } from "react-redux";
+import {
+  endGame,
+  haveWinner,
+  resetGame,
+  updateTurn,
+} from "../redux/actions/actions";
 
-function AppHook() {
-  const [boardCells, setBoardCells] = React.useState([
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-  ]);
-  const [turn, setTurn] = React.useState(10);
-  const [haveWinner, setHaveWinner] = React.useState(false);
-  const [winner, setWinner] = React.useState(0);
-  const [endGame, setEndGame] = React.useState(false);
+function AppHook(props) {
   const endGameRef = React.useRef();
+  const { boardCells, turn, haveWinner, winner, endGame } = props;
 
   const onClickBoardItem = (positionOfItem) => {
     let newBoardCells = boardCells;
@@ -34,26 +27,15 @@ function AppHook() {
       } else {
         newBoardCells[positionOfItem] = 2;
       }
-
-      /**
-       * FUN FACT
-       * the 2nd parameter of a setState is a "callback"
-       * allows a function to call another function
-       * when the setState has finished changing the state
-       */
-      setBoardCells(newBoardCells);
-      setTurn(currentTurn + 1);
+      props.updateTurnRedux(newBoardCells);
 
       let isThereAWinner = checkWinner(newBoardCells);
       let isEndGame = checkEndGame(newBoardCells);
 
       if (isThereAWinner) {
-        setHaveWinner(true);
-        setWinner(currentPlayer);
-        console.log("entrato");
-        setEndGame(true);
+        props.haveWinnerRedux(currentPlayer);
       } else if (isEndGame) {
-        setEndGame(true);
+        props.endGameRedux();
       }
     }
   };
@@ -145,11 +127,7 @@ function AppHook() {
    */
   const onClickAnyKeyboardKeys = () => {
     if (endGameRef.current) {
-      setBoardCells([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      setTurn(0);
-      setHaveWinner(false);
-      setEndGame(false);
-      setWinner(0);
+      props.resetGameRedux();
     }
   };
 
@@ -208,9 +186,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateTurnRedux: () => dispatch(updateTurn),
+  updateTurnRedux: (payload) => dispatch(updateTurn(payload)),
   resetGameRedux: () => dispatch(resetGame),
-  haveWinnerRedux: () => dispatch(haveWinner),
+  haveWinnerRedux: (payload) => dispatch(haveWinner(payload)),
   endGameRedux: () => dispatch(endGame),
 });
 
