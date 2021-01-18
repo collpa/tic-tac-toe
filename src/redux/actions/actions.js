@@ -3,15 +3,15 @@ export const HAVE_WINNER = "HAVE_WINNER";
 export const END_GAME = "END_GAME";
 export const RESET_GAME = "RESET_GAME";
 
-export const updateTurn = {
+export const updateTurn = (payload) => ({
   type: UPDATE_TURN,
-  payload: null,
-};
+  payload,
+});
 
-export const haveWinner = {
+export const haveWinner = (payload) => ({
   type: HAVE_WINNER,
-  payload: null,
-};
+  payload,
+});
 
 export const endGame = {
   type: END_GAME,
