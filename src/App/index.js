@@ -199,4 +199,19 @@ function AppHook() {
   );
 }
 
-export default AppHook;
+const mapStateToProps = (state) => ({
+  boardCells: state.boardCells,
+  turn: state.turn,
+  haveWinner: state.haveWinner,
+  winner: state.winner,
+  endGame: state.endGame,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateTurnRedux: () => dispatch(updateTurn),
+  resetGameRedux: () => dispatch(resetGame),
+  haveWinnerRedux: () => dispatch(haveWinner),
+  endGameRedux: () => dispatch(endGame),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppHook);
