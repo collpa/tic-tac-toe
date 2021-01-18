@@ -4,29 +4,62 @@ import Player from "../Player";
 import Board from "../Board";
 import "./styles.scss";
 
+const initialState = {
+  turn: 0,
+  boardCells: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  haveWinner: false,
+  winner: false,
+  endGame: false,
+};
+
+function reducer(state, action) {
+  console.log(action.type);
+
+  const { type, payload } = action;
+
+  switch (type) {
+    case "UPDATE_TURN":
+      return {
+        ...state,
+        turn: state.turn + 1,
+        boardCells: payload,
+      };
+    case "HAVE_WINNER":
+      return {
+        ...state,
+        haveWinner: true,
+        endGame: true,
+        winner: payload,
+      };
+    case "END_GAME":
+      return {
+        ...state,
+        endGame: true,
+      };
+    case "RESET_GAME":
+      return {
+        ...state,
+        boardCells: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        turn: 0,
+        haveWinner: false,
+        endGame: false,
+        winner: false,
+      };
+    default:
+      return state;
+  }
+}
+
 function AppHook() {
-  const [boardCells, setBoardCells] = React.useState([
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-  ]);
-  const [turn, setTurn] = React.useState(10);
-  const [haveWinner, setHaveWinner] = React.useState(false);
-  const [winner, setWinner] = React.useState(0);
-  const [endGame, setEndGame] = React.useState(false);
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const { endGame, haveWinner, winner, turn, boardCells } = state;
   const endGameRef = React.useRef();
 
   const onClickBoardItem = (positionOfItem) => {
     let newBoardCells = boardCells;
 
-    if (newBoardCells[positionOfItem] === 0 && !endGame) {
-      let currentTurn = turn;
+    if (newBoardCells[positionOfItem] === 0 && !state.endGame) {
+      let currentTurn = state.turn;
       let currentPlayer = currentTurn % 2 === 0 ? 1 : 2;
 
       if (currentTurn % 2 === 0) {
@@ -35,25 +68,23 @@ function AppHook() {
         newBoardCells[positionOfItem] = 2;
       }
 
-      /**
-       * FUN FACT
-       * the 2nd parameter of a setState is a "callback"
-       * allows a function to call another function
-       * when the setState has finished changing the state
-       */
-      setBoardCells(newBoardCells);
-      setTurn(currentTurn + 1);
+      dispatch({
+        type: "UPDATE_TURN",
+        payload: newBoardCells,
+      });
 
       let isThereAWinner = checkWinner(newBoardCells);
       let isEndGame = checkEndGame(newBoardCells);
 
       if (isThereAWinner) {
-        setHaveWinner(true);
-        setWinner(currentPlayer);
-        console.log("entrato");
-        setEndGame(true);
+        dispatch({
+          type: "HAVE_WINNER",
+          payload: currentPlayer,
+        });
       } else if (isEndGame) {
-        setEndGame(true);
+        dispatch({
+          type: "END_GAME",
+        });
       }
     }
   };
@@ -145,11 +176,9 @@ function AppHook() {
    */
   const onClickAnyKeyboardKeys = () => {
     if (endGameRef.current) {
-      setBoardCells([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-      setTurn(0);
-      setHaveWinner(false);
-      setEndGame(false);
-      setWinner(0);
+      dispatch({
+        type: "RESET_GAME",
+      });
     }
   };
 
