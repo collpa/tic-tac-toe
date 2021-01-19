@@ -25,14 +25,6 @@
   @include grid-item-image("../assets/player1cross.png");
 }
 
-.grid-cross-two {
-  @include grid-item-image("../assets/player2cross.png");
-}
-
-.grid-nought-one {
-  @include grid-item-image("../assets/player1noughts.png");
-}
-
 .grid-nought-two {
   @include grid-item-image("../assets/player2noughts.png");
 }
