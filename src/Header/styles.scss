@@ -20,3 +20,42 @@ h3 {
   text-align: center;
   margin-top: 0;
 }
+
+@mixin animation($str) {
+  -webkit-animation: #{$str};
+  -moz-animation: #{$str};
+  -ms-animation: #{$str};
+  -o-animation: #{$str};
+  animation: #{$str};
+}
+
+@mixin keyframes($animation-name) {
+  @-webkit-keyframes #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes #{$animation-name} {
+    @content;
+  }
+  @-ms-keyframes #{$animation-name} {
+    @content;
+  }
+  @-o-keyframes #{$animation-name} {
+    @content;
+  }
+  @keyframes #{$animation-name} {
+    @content;
+  }
+}
+
+@include keyframes(glow-header) {
+  from {
+    text-shadow: 0 0 0 #5b8679;
+  }
+  to {
+    text-shadow: 0 5px 20px #c6d8d3;
+  }
+}
+
+.text-shadow-drop-center {
+  @include animation("glow-header 1s ease-in-out infinite alternate;");
+}

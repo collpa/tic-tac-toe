@@ -12,17 +12,19 @@ class Header extends React.Component {
     if (this.props.haveWinner) {
       return (
         <>
-          <h1>{`${this.props.playerName} WIN!`}</h1>
+          <h1 className="text-shadow-drop-center">{`${this.props.playerName} WIN!`}</h1>
         </>
       );
     } else if (this.props.endGame) {
       return (
         <>
-          <h1>{"LOOKS LIKE IT'S DRAW"}</h1>
+          <h1 className="text-shadow-drop-center">{"LOOKS LIKE IT'S DRAW"}</h1>
         </>
       );
     } else {
-      return <h1>{"LET THE GAME BEGIN!"}</h1>;
+      return (
+        <h1 className="text-shadow-drop-center">{"LET THE GAME BEGIN!"}</h1>
+      );
     }
   }
 
