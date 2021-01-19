@@ -3,6 +3,8 @@ import Header from "../Header";
 import Player from "../Player";
 import Board from "../Board";
 import "./styles.scss";
+import github from "../assets/GitHub_Logo_White.png";
+import linkedin from "../assets/LI-Logo.png";
 
 class App extends React.Component {
   constructor(props) {
@@ -163,6 +165,21 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <div className="flex-label-images">
+          <a href="https://github.com/collpa/tic-tac-toe" target="blank">
+            <img src={github} alt="GitHub label" className="github-label" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/paola-collu-2889371b4"
+            target="blank"
+          >
+            <img
+              src={linkedin}
+              alt="Linkedin label"
+              className="linkedin-label"
+            />
+          </a>
+        </div>
         <Header
           endGame={this.state.endGame}
           haveWinner={this.state.haveWinner}

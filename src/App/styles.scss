@@ -1,12 +1,39 @@
 body {
-  background-color: #b8336a;
-  //#1e1e24; blackish
-  //#69626d; greish
-  //#4c5f6b; bluish
+  background: linear-gradient(
+    to right,
+    #e85154,
+    #d33f61,
+    #b8336a,
+    #902753,
+    #902753,
+    #b8336a,
+    #d33f61,
+    #e85154
+  );
 }
 
 .container {
   padding: 0 10vw;
   display: flex;
   justify-content: space-between;
+}
+
+.github-label {
+  width: 7vh;
+}
+
+.linkedin-label {
+  width: 7vh;
+}
+
+.flex-label-images {
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 2vh;
+  margin-right: 2vh;
+  position: fixed;
+
+  display: flex;
+  justify-content: flex-end;
 }
