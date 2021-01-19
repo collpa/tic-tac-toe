@@ -46,30 +46,30 @@ p {
 
 @include keyframes(glow-first-player) {
   from {
-    text-shadow: 0 5px 20px #ffaa5a;
-    font-size: 20px;
+    text-shadow: 0 0 0 #ffaa5a;
+    font-size: 19px;
   }
   to {
     text-shadow: 0 5px 20px #ff9633;
-    font-size: 32px;
+    font-size: 29px;
   }
 }
 
 @include keyframes(glow-second-player) {
   from {
-    text-shadow: 0 5px 20px #fa7a75;
-    font-size: 20px;
+    text-shadow: 0 0 0 #fa7a75;
+    font-size: 19px;
   }
   to {
     text-shadow: 0 5px 20px #f8403a;
-    font-size: 32px;
+    font-size: 29px;
   }
 }
 
 .text-turn-player1 {
-  @include animation("glow-first-player 1s ease-in-out infinite alternate;");
+  @include animation("glow-first-player 1s linear infinite alternate;");
 }
 
 .text-turn-player2 {
-  @include animation("glow-second-player 1s ease-in-out infinite alternate;");
+  @include animation("glow-second-player 1s linear infinite alternate;");
 }
